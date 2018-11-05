@@ -6,6 +6,6 @@ DEBUG = False
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-secrets = json.load(open(os.path.join(SECRETS_DIR, 'production.json')))
+production_set = json.load(open(os.path.join(SECRETS_DIR, 'production.json')))
 
-DATABASES = secrets['DATABASES']
+DATABASES = production_set['DATABASES']
