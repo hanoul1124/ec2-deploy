@@ -21,18 +21,22 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 # MEDIA
 MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
-MEDIA_URL = '/.media/'
+MEDIA_URL = '/media/'
 
 # Static
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
+
 # ./manage.py collectstatic > 스태틱 파일들을 한곳에 몰아준다
 # 개발 단계에서는 나눠져있는게 편리하지만, 배포시 효율상으로
 # 한 곳에 몰아넣는게 효율이 좋다.
 # STATIC ROOT가 이 위치가 된다. 기존의 스태틱 파일들은 그대로 유지되고,
 # 추가로 복사해서 만드는 것이다.
+
+# collectstatic했을 때 파일이 모이는 곳
+# STATICFILES_STORAGE를 FileSytemStorage로 지정했을 때만 사용
 STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
 
 # Quick-start development settings - unsuitable for production
