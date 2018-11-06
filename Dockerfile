@@ -8,7 +8,7 @@ ENV         LANG                    C.UTF-8
 # 패키지 업그레이드, Python3 설치
 RUN         apt -y update
 RUN         apt -y dist-upgrade
-RUN         apt -y install gcc nginx supervior
+RUN         apt -y install gcc nginx supervisor
 RUN         pip3 install uwsgi
 
 # requirements.txt 파일만 복사 후 패키지 설치
@@ -17,6 +17,7 @@ RUN         pip3 install uwsgi
 COPY        requirements-production.txt /tmp/requirements.txt
 RUN         pip3 install -r /tmp/requirements.txt
 
+ENV         DJANGO_SETTINGS_MODULE    config.settings.production
 # docker build할 때의 PATH
 #(현재 설정은 . (빌드한 현 위치=ec2-deploy폴더))에
 # 해당하는 폴더의 전체 내용을
@@ -51,6 +52,10 @@ RUN         ln -sf /etc/nginx/sites-available/app.nginx \
 # Supervior설정파일 복사
 RUN         cp -f /srv/project/.config/supervisord.conf \
             /etc/supervisor/conf.d/
+
+
+# 80번 포트 개방
+EXPOSE      80
 
 # Command로 supervisor실행
 CMD        supervisord -n
