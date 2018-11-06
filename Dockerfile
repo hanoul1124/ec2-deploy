@@ -1,22 +1,4 @@
-# 이미지 빌드 (ec2-deploy폴더에서 실행)
-# docker build -t ec2-deploy -f Dockerfile .
-FROM        python:3.6.7-slim
-MAINTAINER  hanoul1124@gmail.com
-
-ENV         LANG                    C.UTF-8
-
-# 패키지 업그레이드, Python3 설치
-RUN         apt -y update
-RUN         apt -y dist-upgrade
-RUN         apt -y install gcc nginx supervisor
-RUN         pip3 install uwsgi
-
-# requirements.txt 파일만 복사 후 패키지 설치
-# requirements.txt 파일의 내용이 바뀌지 않으면 pip3 install ...
-# 부분이 재실행되지 않는다.(빌드마다 계속 재설치하는 것을 피하기 위함)
-COPY        requirements-production.txt /tmp/requirements.txt
-RUN         pip3 install -r /tmp/requirements.txt
-
+FROM        eb-docker:base
 ENV         DJANGO_SETTINGS_MODULE    config.settings.production
 # docker build할 때의 PATH
 #(현재 설정은 . (빌드한 현 위치=ec2-deploy폴더))에
@@ -38,16 +20,23 @@ RUN         python3 manage.py collectstatic --noinput
 
 
 # Nginx
+RUN         rm -rf  /etc/nginx/sites-available/* && \
+            rm -rf  /etc/nginx/sites-enabled/* && \
+            cp -f   /srv/project/.config/app.nginx \
+                    /etc/nginx/sites-available/ && \
+            ln -sf  /etc/nginx/sites-available/app.nginx \
+                    /etc/nginx/sites-enabled/app.nginx
+
 # 기존에 존재하던 Nginx설정파일들 삭제
-RUN         rm -rf /etc/nginx/sites-available/*
-RUN         rm -rf /etc/nginx/sites-enabled/*
-
-# 프로젝트 Nginx설정파일 복사 및 enabled로 링크 설정
-RUN         cp -f /srv/project/.config/app.nginx \
-            /etc/nginx/sites-available/
-
-RUN         ln -sf /etc/nginx/sites-available/app.nginx \
-            /etc/nginx/sites-enabled/app.nginx
+#RUN         rm -rf /etc/nginx/sites-available/*
+#RUN         rm -rf /etc/nginx/sites-enabled/*
+#
+## 프로젝트 Nginx설정파일 복사 및 enabled로 링크 설정
+#RUN         cp -f /srv/project/.config/app.nginx \
+#            /etc/nginx/sites-available/
+#
+#RUN         ln -sf /etc/nginx/sites-available/app.nginx \
+#            /etc/nginx/sites-enabled/app.nginx
 
 # Supervior설정파일 복사
 RUN         cp -f /srv/project/.config/supervisord.conf \
