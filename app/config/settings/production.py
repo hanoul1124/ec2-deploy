@@ -4,7 +4,7 @@ from .base import *
 
 DEBUG = False
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.production.application'
 
 production_set = json.load(open(os.path.join(SECRETS_DIR, 'production.json')))
 

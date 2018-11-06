@@ -1,16 +1,15 @@
 # 이미지 빌드 (ec2-deploy폴더에서 실행)
 # docker build -t ec2-deploy -f Dockerfile .
-FROM        ubuntu:18.04
+FROM        python:3.6.7-slim
 MAINTAINER  hanoul1124@gmail.com
+
+ENV         LANG                    C.UTF-8
 
 # 패키지 업그레이드, Python3 설치
 RUN         apt -y update
 RUN         apt -y dist-upgrade
-RUN         apt -y install python3-pip
-
-# Nginx , uWSGI 설치
-RUN apt -y install nginx supervisor
-RUN pip3 install uwsgi
+RUN         apt -y install gcc nginx supervior
+RUN         pip3 install uwsgi
 
 # requirements.txt 파일만 복사 후 패키지 설치
 # requirements.txt 파일의 내용이 바뀌지 않으면 pip3 install ...
@@ -25,9 +24,6 @@ RUN         pip3 install -r /tmp/requirements.txt
 
 COPY        ./  /srv/project
 WORKDIR     /srv/project
-
-ENV         DJANGO_SETTINGS_MODULE  config.settings.production
-ENV         LANG                    C.UTF-8
 
 # 프로세스를 실행할 명령
 # RUN은 이미지를 만드는 데에 사용됨
