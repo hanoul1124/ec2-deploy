@@ -27,10 +27,6 @@ media
 # End of https://www.gitignore.io/api/django
 # Created by https://www.gitignore.io/api/git,linux,macos,python,pycharm+all,jupyternotebook
 
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
 
 ### Git ###
 *.orig
@@ -292,6 +288,7 @@ pip-selfcheck.json
 
 
 # End of https://www.gitignore.io/api/git,linux,macos,python,pycharm+all,jupyternotebook
+
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
