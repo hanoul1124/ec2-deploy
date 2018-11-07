@@ -1,5 +1,5 @@
 # docker build -t eb:docker -f Dockerfile .
-FROM        azelf/eb-docker:base
+FROM        hanoul1124/eb-docker:base
 ENV         DJANGO_SETTINGS_MODULE  config.settings.production
 
 # 전체 소스코드 복사
