@@ -5,7 +5,7 @@ class MediaStorage(S3Boto3Storage):
     location = 'media'
     default_acl = 'private'
 
-# class StaticStorage(S3Boto3Storage):
-#     location = 'static'
-#     default_acl = 'public-read'
+class StaticStorage(S3Boto3Storage):
+    location = 'static'
+    default_acl = 'public-read'
 # ACL > AWS S3 에 대한 접근권한 설정

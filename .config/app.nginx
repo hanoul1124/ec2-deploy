@@ -1,32 +1,31 @@
-# /etc/nginx/sites-available 폴더에 이 파일이 있어야함. 따라서 복사해야함
+
+# /etc/nginx/sites-available/
 server {
-    # 80번 포트로부터 받은 요청을 처리한다(http의 기본 포트)
+    # 80번 포트로부터 받은 요청을 처리
     listen 80;
 
-    # 도메인이 'localhost'에 해당할 경우,
+    # 도메인이 'localhost'에 해당 할 때
     server_name localhost *.amazonaws.com;
 
-    # 인코딩 방식
+    # 인코딩방식
     charset utf-8;
 
     # request/response의 최대 사이즈
     # (기본값이 매우 작음)
     client_max_body_size 128M;
 
-    # ('/'부터 시작) -> 모든 URL연결에 대해서 작동한다는 뜻
+    # ('/'부터 시작) -> 모든 URL연결에 대해
     location / {
-        # uwsgi 와의 연결에 unix소켓을 사용하겠다(지금까지는 그냥 http)
-        # "/tmp/app.sock" 파일을 사용
-        # app.sock 을 생성하는 것이
-        uwsgi_pass unix://tmp/app.sock;
-        include    uwsgi_params;
+        # uwsgi와의 연결에 unix소켓을 사용
+        # "/tmp/app.sock"파일을 사용
+        uwsgi_pass  unix:///tmp/app.sock;
+        include     uwsgi_params;
     }
 
     location /static/ {
-        alias /srv/project/.static/;
+        alias   /srv/project/.static/;
     }
     location /media/ {
-        alias /srv/project/.media/;
+        alias   /srv/project/.media/;
     }
-
 }
