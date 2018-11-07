@@ -1,4 +1,4 @@
-FROM        eb-docker:base
+FROM        hanoul1124/eb-docker:base
 ENV         DJANGO_SETTINGS_MODULE    config.settings.production
 # docker build할 때의 PATH
 #(현재 설정은 . (빌드한 현 위치=ec2-deploy폴더))에

@@ -49,12 +49,6 @@ SECRET_KEY = secrets['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '.amazonaws.com',
-]
-
 # members의 User(AbstractUser)를 통해서 Django의 기존 생성 모델을 활용할 경우
 # User의 related_name이 겹쳐 중복되기 때문에 에러가 발생한다.
 # 따라서 AUTH_USER_MODEL을 적절히 선언해줘야 한다.
