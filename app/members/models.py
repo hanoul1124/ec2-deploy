@@ -10,3 +10,4 @@ class User(AbstractUser):
     # ec2-deploy/.media/user 폴더에 업로드한 파일이 저장되도록 설정
     # MEDIA_ROOT, MEDIA_URL
     img_profile = models.ImageField(upload_to='user', blank=True)
+    nickname = models.CharField(max_length=20, unique=True, blank=True, null=True)
